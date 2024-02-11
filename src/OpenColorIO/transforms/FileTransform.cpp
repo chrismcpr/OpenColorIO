@@ -8,6 +8,7 @@
 #include <string.h>
 #include <iostream>
 #include <iterator>
+#include <cctype>
 
 #include <pystring.h>
 
@@ -156,6 +157,33 @@ const char * FileTransform::GetFormatNameByIndex(int index)
 const char * FileTransform::GetFormatExtensionByIndex(int index)
 {
     return FormatRegistry::GetInstance().getFormatExtensionByIndex(FORMAT_CAPABILITY_READ, index);
+}
+
+static bool FileTransform::IsFormatExtensionSupported(const char * ext) {
+     
+     string extension = ext;
+
+     string extensions[7] = {exr, tif, dpx, psd, jpg, nef, cr2};
+
+    // remove dot if there is one
+     if (ext[0] == '.') 
+     {
+        extension = ext.substr(1, ext.length());
+     }
+
+    // make every character lowercase
+     transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+
+     for (int i = 0; i < 7; i++) 
+     {
+        if (ext == extension) 
+        {
+            return true;
+        }
+     }
+
+
+    return false;
 }
 
 std::ostream& operator<< (std::ostream& os, const FileTransform& t)
