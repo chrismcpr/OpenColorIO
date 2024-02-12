@@ -176,7 +176,7 @@ static bool FileTransform::IsFormatExtensionSupported(const char * ext) {
 
      for (int i = 0; i < 7; i++) 
      {
-        if (ext == extension) 
+        if (extension == extensions[i]) 
         {
             return true;
         }
